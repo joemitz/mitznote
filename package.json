@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "webpack --mode development --watch",
-    "start": "nodemon server/index.js & open 'http://localhost:3000'",
+    "start": "nodemon server/index.js --delay 500ms & open 'http://localhost:3000'",
     "webpack": "webpack server",
     "build": "webpack"
   },
@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/joemitz/mitznote#readme",
   "dependencies": {
+    "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
