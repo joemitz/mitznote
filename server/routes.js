@@ -3,14 +3,18 @@ const router = require('express').Router();
 
 router.post('/login', (req, res) => {
   db.user.login(req.body.username, req.body.password)
-  .then(() => res.end('success'))
-  .catch(err => console.log(err))
+  .then((result) => {
+    result === null ? res.send('invalid') : res.send('success')
+  })
+  .catch(err => {
+    res.send(err)
+  })
 });
 
 router.post('/signup', (req, res) => {
   db.user.signup(req.body.username, req.body.password)
-  .then(() => res.end('success'))
-  .catch(err => console.log(err))
+  .then((result) => res.send(result))
+  .catch(err => res.send(err))
 });
 
 router.get('/notes', (req, res) => {
