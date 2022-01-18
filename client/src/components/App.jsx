@@ -14,8 +14,24 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (document.cookie) {
+      let username;
+      cookieStore.get('username')
+        .then((cookieUsername) => {
+          username = cookieUsername;
+          return cookieStore.get('password')
+        })
+        .then((password) => {
+          request.login(username, password, (err) => {
+            err ? this.setState({ error: err }) : this.setState({ error: '', loggedIn: true });
+          });
+        })
+    }
+  }
+
   renderSignUp() {
-    this.setState({ signUp: true });
+    this.setState({ signUp: true, error: '' });
   }
 
   onSignUp(username, password) {
@@ -30,11 +46,18 @@ class App extends React.Component {
     });
   }
 
+  onLogout() {
+    cookieStore.delete('username')
+    .then(() => cookieStore.delete('password'))
+    .then(() => this.setState({ loggedIn: false }))
+  }
+
   render() {
     if (this.state.loggedIn) {
       return (
         <div>
           <h1>You're logged in, hurray!</h1>
+          <button onClick={this.onLogout.bind(this)}>Logout</button>
         </div>
       );
 
