@@ -3,6 +3,7 @@ import SignUp from './SignUp.jsx';
 import Login from './Login.jsx';
 import * as request from '../requests.js';
 import { hot } from 'react-hot-loader';
+import * as cookies from '../cookies.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    request.checkCookies(() => {
+    cookies.check(() => {
       this.setState({ error: '', loggedIn: true });
     });
   }
@@ -37,7 +38,7 @@ class App extends React.Component {
   }
 
   onLogout() {
-    request.deleteCookies(() => {
+    cookies.clear(() => {
       this.setState({ loggedIn: false });
     });
   }
