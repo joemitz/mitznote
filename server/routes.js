@@ -1,6 +1,12 @@
 const db = require('./db.js');
 const router = require('express').Router();
 
+router.post('/signup', (req, res) => {
+  db.user.signup(req.body.username, req.body.password)
+  .then((result) => res.send(result))
+  .catch(err => res.send(err))
+});
+
 router.post('/login', (req, res) => {
   db.user.login(req.body.username, req.body.password)
   .then((result) => {
@@ -9,12 +15,6 @@ router.post('/login', (req, res) => {
   .catch(err => {
     res.send(err)
   })
-});
-
-router.post('/signup', (req, res) => {
-  db.user.signup(req.body.username, req.body.password)
-  .then((result) => res.send(result))
-  .catch(err => res.send(err))
 });
 
 router.get('/notes', (req, res) => {

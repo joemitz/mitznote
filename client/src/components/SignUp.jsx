@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
 
 const SignUp = (props) => {
 
@@ -26,4 +27,4 @@ const SignUp = (props) => {
   );
 }
 
-export default SignUp;
+export default hot(module)(SignUp);

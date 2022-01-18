@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: path.join(__dirname, 'client', 'src', 'index.js'),
@@ -42,9 +43,14 @@ module.exports = {
       }
     ]
   },
+  mode: 'development',
+  devServer: {
+    hot: true
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'client', 'src', 'index.html')
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ]
 }
