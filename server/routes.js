@@ -22,7 +22,7 @@ router.post('/notes', (req, res) => {
 });
 
 router.get('/notes', (req, res) => {
-
+  console.log('hi');
 });
 
 router.put('/notes', (req, res) => {

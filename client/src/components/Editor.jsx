@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 
 const Editor = (props) => {
+
   const clickHandler = (event) => {
     event.preventDefault();
     let title = event.currentTarget.form[0].value;

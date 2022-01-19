@@ -5,6 +5,7 @@ import * as cookies from '../cookies.js';
 import SignUp from './SignUp.jsx';
 import Login from './Login.jsx';
 import Editor from './Editor.jsx';
+import List from './List.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,13 +14,16 @@ class App extends React.Component {
       loggedIn: false,
       signUp: false,
       error: '',
-      username: ''
-    }
+      username: '',
+      notes: []
+    };
+    this.getNotes = this.getNotes.bind(this);
   }
 
   componentDidMount() {
     cookies.check((username) => {
       this.setState({ username, loggedIn: true, error: '' });
+      this.getNotes();
     });
   }
 
@@ -52,10 +56,18 @@ class App extends React.Component {
     })
   }
 
+  getNotes() {
+    request.read()
+      .then((notes => this.setState({ notes })))
+      .catch(err => console.log(err));
+  }
+
   render() {
     if (this.state.loggedIn) {
       return (
         <div>
+          <p>Welcome, {this.state.username}!</p>
+          <List notes={this.state.notes}/>
           <Editor onCreate={this.onCreate.bind(this)}/>
           <br></br>
           <button onClick={this.onLogout.bind(this)}>Logout</button>

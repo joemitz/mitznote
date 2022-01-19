@@ -26,10 +26,16 @@ const login = (username, password, callback) => {
 
 const create = (username, title, text, callback) => {
   axios.post(`${path}/notes`, { username, title, text })
-    .then(res => {
-      callback();
-    })
+    .then(res => { callback() })
     .catch(err => { console.log(err); callback('Something went wrong.') });
 }
 
-export { signup, login, create };
+const read = (username, callback) => {
+  return new Promise((res, rej) => {
+    axios.get(`${path}/notes`, { username })
+      .then(data => res(data))
+      .catch(err => rej(err));
+  });
+}
+
+export { signup, login, create, read };
