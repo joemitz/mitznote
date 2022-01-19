@@ -52,13 +52,16 @@ class App extends React.Component {
 
   onCreate(title, text) {
     request.create(this.state.username, title, text, err => {
-      console.log(err);
+      err ? console.log(err) : this.getNotes(this.state.username);
     })
   }
 
   getNotes(username) {
     request.read(username)
-      .then(notes => this.setState({ notes }))
+      .then(data => {
+        let notes = data.data;
+        this.setState({ notes })
+      })
       .catch(err => console.log(err));
   }
 

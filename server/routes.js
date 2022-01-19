@@ -22,8 +22,11 @@ router.post('/notes', (req, res) => {
 });
 
 router.get('/notes', (req, res) => {
-  console.log(req.query.username);
-  res.end();
+  db.notes.get(req.query.username)
+    .then(data => {
+      res.send(data)
+    })
+    .catch(err => { console.log(err); res.status(500).send(err) })
 });
 
 router.put('/notes', (req, res) => {

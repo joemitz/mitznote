@@ -15,6 +15,15 @@ module.exports = {
       const user = await User.findOne({ username });
       user.notes.push({ title, text });
       return user.save();
+    },
+    get: async (username) => {
+      let user = await User.findOne({ username });
+      return user.notes.map(note => {
+        return {
+          title: note.title,
+          text: note.text
+        }
+      });
     }
   }
 }

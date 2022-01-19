@@ -3,17 +3,26 @@ import { hot } from 'react-hot-loader';
 
 const List = (props) => {
 
-  // props.map((note) => {
-  //   return <li>{note.title}</li>
-  // })
-
-  return (
-    <div>
-      <ul>
-        {}
-      </ul>
-    </div>
-  )
+  if (props.notes.length > 0) {
+    return (
+      <div>
+        <ul>
+          {
+            props.notes.map(note => {
+              return <li>{note.title}</li>
+            })
+          }
+        </ul>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <ul>
+        </ul>
+      </div>
+    )
+  }
 }
 
 export default hot(module)(List);
