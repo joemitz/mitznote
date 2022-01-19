@@ -2,13 +2,14 @@ import * as request from './requests.js';
 
 const check = (callback) => {
   if (document.cookie) {
-    let username;
+    let username, password
     cookieStore.get('username')
-      .then(cookieUsername => {
-        username = cookieUsername;
+      .then(cookie => {
+        username = cookie.value;
         return cookieStore.get('password')
       })
-      .then(password => {
+      .then(cookie => {
+        password = cookie.value;
         request.login(username, password, err => {
           if (!err) { callback(username) };
         });
