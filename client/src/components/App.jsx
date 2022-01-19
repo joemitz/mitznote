@@ -23,7 +23,7 @@ class App extends React.Component {
   componentDidMount() {
     cookies.check((username) => {
       this.setState({ username, loggedIn: true, error: '' });
-      this.getNotes();
+      this.getNotes(username);
     });
   }
 
@@ -39,8 +39,8 @@ class App extends React.Component {
 
   onLogin(username, password) {
     request.login(username, password, err => {
-      err ? this.setState({ error: err })
-      : this.setState({ username, loggedIn: true, error: '' });
+      err ? this.setState({ error: err }) : this.setState({ username, loggedIn: true, error: '' });
+      this.getNotes(username)
     });
   }
 
@@ -56,9 +56,9 @@ class App extends React.Component {
     })
   }
 
-  getNotes() {
-    request.read()
-      .then((notes => this.setState({ notes })))
+  getNotes(username) {
+    request.read(username)
+      .then(notes => this.setState({ notes }))
       .catch(err => console.log(err));
   }
 

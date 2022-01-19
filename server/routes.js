@@ -22,7 +22,8 @@ router.post('/notes', (req, res) => {
 });
 
 router.get('/notes', (req, res) => {
-  console.log('hi');
+  console.log(req.query.username);
+  res.end();
 });
 
 router.put('/notes', (req, res) => {

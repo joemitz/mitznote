@@ -30,12 +30,8 @@ const create = (username, title, text, callback) => {
     .catch(err => { console.log(err); callback('Something went wrong.') });
 }
 
-const read = (username, callback) => {
-  return new Promise((res, rej) => {
-    axios.get(`${path}/notes`, { username })
-      .then(data => res(data))
-      .catch(err => rej(err));
-  });
+const read = (username) => {
+  return axios.get(`${path}/notes?username=${username}`);
 }
 
 export { signup, login, create, read };
