@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
+import * as request from '../requests.js';
+import * as cookies from '../cookies.js';
 import SignUp from './SignUp.jsx';
 import Login from './Login.jsx';
-import * as request from '../requests.js';
-import { hot } from 'react-hot-loader';
-import * as cookies from '../cookies.js';
+import Editor from './Editor.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,13 +12,14 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       signUp: false,
-      error: ''
+      error: '',
+      username: ''
     }
   }
 
   componentDidMount() {
-    cookies.check(() => {
-      this.setState({ error: '', loggedIn: true });
+    cookies.check((username) => {
+      this.setState({ username, loggedIn: true, error: '' });
     });
   }
 
@@ -33,7 +35,8 @@ class App extends React.Component {
 
   onLogin(username, password) {
     request.login(username, password, err => {
-      err ? this.setState({ error: err }) : this.setState({ error: '', loggedIn: true });
+      err ? this.setState({ error: err })
+      : this.setState({ username, loggedIn: true, error: '' });
     });
   }
 
@@ -43,11 +46,18 @@ class App extends React.Component {
     });
   }
 
+  onCreate(title, text) {
+    request.create(this.state.username, title, text, err => {
+      console.log(err);
+    })
+  }
+
   render() {
     if (this.state.loggedIn) {
       return (
         <div>
-          <h1>You're logged in, hurray!</h1>
+          <Editor onCreate={this.onCreate.bind(this)}/>
+          <br></br>
           <button onClick={this.onLogout.bind(this)}>Logout</button>
         </div>
       );

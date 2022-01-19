@@ -24,4 +24,12 @@ const login = (username, password, callback) => {
     .catch(err => { console.log(err); callback('Something went wrong.') });
 };
 
-export { signup, login };
+const create = (username, title, text, callback) => {
+  axios.post(`${path}/notes`, { username, title, text })
+    .then(res => {
+      callback();
+    })
+    .catch(err => { console.log(err); callback('Something went wrong.') });
+}
+
+export { signup, login, create };

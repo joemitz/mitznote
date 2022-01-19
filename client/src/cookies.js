@@ -10,17 +10,18 @@ const check = (callback) => {
       })
       .then(password => {
         request.login(username, password, err => {
-          if (!err) { callback() };
+          if (!err) { callback(username) };
         });
-      }).catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   }
 }
 
 const clear = (callback) => {
   cookieStore.delete('username')
-      .then(() => cookieStore.delete('password'))
-      .then(() => callback())
-      .catch(err => console.log(err));
+    .then(() => cookieStore.delete('password'))
+    .then(() => callback())
+    .catch(err => console.log(err));
 }
 
 export { check, clear };

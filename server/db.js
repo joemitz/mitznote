@@ -9,5 +9,12 @@ module.exports = {
     login: (username, password) => {
       return User.findOne({ username, password });
     }
+  },
+  notes: {
+    create: async (username, title, text) => {
+      const user = await User.findOne({ username });
+      user.notes.push({ title, text });
+      return user.save();
+    }
   }
 }

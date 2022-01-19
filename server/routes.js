@@ -15,11 +15,13 @@ router.post('/login', (req, res) => {
     .catch(err => { console.log(err); res.send(err) });
 });
 
-router.get('/notes', (req, res) => {
-
+router.post('/notes', (req, res) => {
+  db.notes.create(req.body.username, req.body.title, req.body.text)
+    .then(result => res.send('success'))
+    .catch(err => { console.log(err); res.send(err) });
 });
 
-router.post('/notes', (req, res) => {
+router.get('/notes', (req, res) => {
 
 });
 
