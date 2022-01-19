@@ -15,7 +15,7 @@ const Editor = (props) => {
       <form>
         <input id='title' name='title'></input>
         <br></br><br></br>
-        <textarea id='text' name='text' rows='25'></textarea>
+        <textarea id='text' name='text' rows='10'></textarea>
         <br></br><br></br>
         <button onClick={clickHandler}>Create</button>
         <br></br>

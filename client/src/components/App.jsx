@@ -6,6 +6,7 @@ import SignUp from './SignUp.jsx';
 import Login from './Login.jsx';
 import Editor from './Editor.jsx';
 import List from './List.jsx';
+import Viewer from './Viewer.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,15 +15,16 @@ class App extends React.Component {
       loggedIn: false,
       signUp: false,
       error: '',
-      username: '',
-      notes: []
+      currentUser: '',
+      notes: [],
+      selectedNote: 0
     };
     this.getNotes = this.getNotes.bind(this);
   }
 
   componentDidMount() {
     cookies.check((username) => {
-      this.setState({ username, loggedIn: true, error: '' });
+      this.setState({ currentUser: username, loggedIn: true, error: '' });
       this.getNotes(username);
     });
   }
@@ -39,7 +41,8 @@ class App extends React.Component {
 
   onLogin(username, password) {
     request.login(username, password, err => {
-      err ? this.setState({ error: err }) : this.setState({ username, loggedIn: true, error: '' });
+      err ? this.setState({ error: err })
+      : this.setState({ currentUser: username, loggedIn: true, error: '' });
       this.getNotes(username)
     });
   }
@@ -51,26 +54,31 @@ class App extends React.Component {
   }
 
   onCreate(title, text) {
-    request.create(this.state.username, title, text, err => {
-      err ? console.log(err) : this.getNotes(this.state.username);
+    request.create(this.state.currentUser, title, text, err => {
+      err ? console.log(err) : this.getNotes(this.state.currentUser);
     })
   }
 
   getNotes(username) {
     request.read(username)
-      .then(data => {
-        let notes = data.data;
+      .then(notes => {
+        notes = notes.data.reverse();
         this.setState({ notes })
       })
       .catch(err => console.log(err));
+  }
+
+  selectNote(index) {
+    this.setState({ selectedNote: index });
   }
 
   render() {
     if (this.state.loggedIn) {
       return (
         <div>
-          <p>Welcome, {this.state.username}!</p>
-          <List notes={this.state.notes}/>
+          <p>Welcome, {this.state.currentUser}!</p>
+          <List notes={this.state.notes} selectNote={this.selectNote.bind(this)}/>
+          <Viewer notes={this.state.notes} selectedNote={this.state.selectedNote}/>
           <Editor onCreate={this.onCreate.bind(this)}/>
           <br></br>
           <button onClick={this.onLogout.bind(this)}>Logout</button>
