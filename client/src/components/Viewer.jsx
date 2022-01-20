@@ -3,32 +3,23 @@ import { hot } from 'react-hot-loader';
 
 const Viewer = (props) => {
 
-  const clickHandler = (event) => {
+  const deleteHandler = (event) => {
     event.preventDefault();
     props.onDelete(props.noteID);
   }
 
-  let title = '';
-  let text = '';
-
-  if (props.notes.length && props.noteID) {
-
-    props.notes.forEach(note => {
-      if (note.id === props.noteID) {
-        title = note.title;
-        text = note.text;
-      }
-    })
+  const changeHandler = (event) => {
+    props.onUpdate(event.target.value);
   }
 
   return (
     <div>
       <form>
-        <input id='title' name='title' value={title}></input>
+        <input type='text' value={props.title}></input>
         <br></br><br></br>
-        <textarea id='text' name='text' rows='10' value={text}></textarea>
+        <textarea rows='10' value={props.text} onChange={changeHandler}></textarea>
       </form>
-      <button onClick={clickHandler}>Delete</button>
+      <button onClick={deleteHandler}>Delete</button>
     </div>
   )
 }

@@ -31,6 +31,15 @@ module.exports = {
       let user = await User.findOne({ username });
       user.notes.pull({ _id: noteID });
       return user.save();
+    },
+    update: async (username, noteID, text) => {
+      let user = await User.findOne({ username });
+      let noteIDs = user.notes.map(note => {
+        return note.id;
+      });
+      let noteIndex = noteIDs.indexOf(noteID);
+      user.notes[noteIndex].text = text;
+      return user.save();
     }
   }
 }

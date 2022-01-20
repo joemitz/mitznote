@@ -36,7 +36,9 @@ router.delete('/notes', (req, res) => {
 });
 
 router.put('/notes', (req, res) => {
-
+  db.notes.update(req.body.username, req.body.noteID, req.body.text)
+    .then(() => res.send('success'))
+    .catch((err) => { console.log(err); res.status(500).send(err) });
 });
 
 module.exports = router;

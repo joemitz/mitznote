@@ -17,7 +17,9 @@ class App extends React.Component {
       error: '',
       username: '',
       notes: [],
-      noteID: 0
+      noteID: '',
+      title: '',
+      text: ''
     };
     this.getNotes = this.getNotes.bind(this);
   }
@@ -60,6 +62,7 @@ class App extends React.Component {
   }
 
   onDelete(noteID) {
+    this.setState({ title: '', text: '' })
     request.destroy(this.state.username, noteID)
       .then(() => this.getNotes(this.state.username))
       .catch((err) => console.log(err));
@@ -76,6 +79,18 @@ class App extends React.Component {
 
   selectNote(noteID) {
     this.setState({ noteID });
+    this.state.notes.forEach(note => {
+      if (noteID === note.id) {
+        this.setState({ title: note.title, text: note.text });
+      }
+    });
+  }
+
+  onUpdate(text) {
+    this.setState({ text });
+    request.put(this.state.username, this.state.noteID, text)
+      .then(() => this.getNotes(this.state.username))
+      .catch((err) => console.log('err'));
   }
 
   render() {
@@ -83,11 +98,19 @@ class App extends React.Component {
       return (
         <div>
           <p>Welcome, {this.state.username}!</p>
-          <List notes={this.state.notes} selectNote={this.selectNote.bind(this)}/>
-          <Viewer notes={this.state.notes} noteID={this.state.noteID} onDelete={this.onDelete.bind(this)}/>
+          <button onClick={this.onLogout.bind(this)}>Logout</button>
+          <List notes={this.state.notes}
+                selectNote={this.selectNote.bind(this)
+          }/>
+          <Viewer notes={this.state.notes}
+                  noteID={this.state.noteID}
+                  onDelete={this.onDelete.bind(this)}
+                  title={this.state.title}
+                  text={this.state.text}
+                  onUpdate={this.onUpdate.bind(this)}
+          />
           <Editor onCreate={this.onCreate.bind(this)}/>
           <br></br>
-          <button onClick={this.onLogout.bind(this)}>Logout</button>
         </div>
       );
 

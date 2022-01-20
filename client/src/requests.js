@@ -38,4 +38,12 @@ const destroy = (username, noteID) => {
   return axios.delete(`${path}/notes?username=${username}&noteID=${noteID}`);
 }
 
-export { signup, login, create, read, destroy };
+const put = (username, noteID, text) => {
+  return axios({
+    method: 'put',
+    url: `${path}/notes`,
+    data: { username, noteID, text }
+  });
+}
+
+export { signup, login, create, read, destroy, put };
