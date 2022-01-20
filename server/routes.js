@@ -26,14 +26,16 @@ router.get('/notes', (req, res) => {
     .then(data => {
       res.send(data)
     })
-    .catch(err => { console.log(err); res.status(500).send(err) })
-});
-
-router.put('/notes', (req, res) => {
-
+    .catch(err => { console.log(err); res.status(500).send(err) });
 });
 
 router.delete('/notes', (req, res) => {
+  db.notes.destroy(req.query.username, req.query.noteID)
+    .then(() => res.send('success'))
+    .catch((err) => { console.log(err); res.status(500).send(err) });
+});
+
+router.put('/notes', (req, res) => {
 
 });
 

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('./schema.js').User;
 
 module.exports = {
@@ -20,10 +21,16 @@ module.exports = {
       let user = await User.findOne({ username });
       return user.notes.map(note => {
         return {
+          id: note._id.toString(),
           title: note.title,
           text: note.text
         }
       });
+    },
+    destroy: async (username, noteID) => {
+      let user = await User.findOne({ username });
+      user.notes.pull({ _id: noteID });
+      return user.save();
     }
   }
 }

@@ -4,11 +4,9 @@ import { hot } from 'react-hot-loader';
 const List = (props) => {
 
   const clickHandler = (event) => {
-    let noteIndex = event.target.id;
-    props.selectNote(noteIndex);
+    let noteID = event.target.id;
+    props.selectNote(noteID);
   }
-
-  let count = 0
 
   if (props.notes.length > 0) {
     return (
@@ -16,9 +14,7 @@ const List = (props) => {
         <ul>
           {
             props.notes.map(note => {
-              let noteIndex = count;
-              count++;
-              return <li id={noteIndex} onClick={clickHandler}>{note.title}</li>
+              return <li id={note.id} onClick={clickHandler}>{note.title}</li>
             })
           }
         </ul>

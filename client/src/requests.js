@@ -34,4 +34,8 @@ const read = (username) => {
   return axios.get(`${path}/notes?username=${username}`);
 }
 
-export { signup, login, create, read };
+const destroy = (username, noteID) => {
+  return axios.delete(`${path}/notes?username=${username}&noteID=${noteID}`);
+}
+
+export { signup, login, create, read, destroy };
