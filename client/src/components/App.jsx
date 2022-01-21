@@ -4,7 +4,7 @@ import * as request from '../requests.js';
 import * as cookies from '../cookies.js';
 import SignUp from './SignUp.jsx';
 import Login from './Login.jsx';
-import Nav from './Nav.jsx';
+import Account from './Account.jsx';
 import Create from './Create.jsx';
 import List from './List.jsx';
 import Editor from './Editor.jsx';
@@ -54,7 +54,7 @@ class App extends React.Component {
 
   onLogout() {
     cookies.clear(() => {
-      this.setState({ loggedIn: false });
+      this.setState({ loggedIn: false, noteID: '', notes: [], title: '', text: '', username: '' });
     });
   }
 
@@ -102,13 +102,20 @@ class App extends React.Component {
     if (this.state.loggedIn) {
       return (
         <div id='app-container'>
-          <Nav onLogout={this.onLogout.bind(this)} username={this.state.username}/>
+
+          <div id='nav-container'>
+            <Create onCreate={this.onCreate.bind(this)}/>
+            <Account onLogout={this.onLogout.bind(this)}
+                 username={this.state.username}/>
+          </div>
+
           <div id='columns-container'>
+
             <div id='left-container'>
-              <Create onCreate={this.onCreate.bind(this)}/>
               <List notes={this.state.notes}
                     selectNote={this.selectNote.bind(this)}/>
             </div>
+
             <div id='right-container'>
               <Editor notes={this.state.notes}
                       noteID={this.state.noteID}
