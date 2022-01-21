@@ -10,19 +10,17 @@ const List = (props) => {
 
   if (props.notes.length > 0) {
     return (
-      <div>
+      <div id='list-container'>
         <ul>
-          {
-            props.notes.map(note => {
-              return <li id={note.id} onClick={clickHandler}>{note.title}</li>
-            })
-          }
+          {props.notes.map(note => {
+            return <li id={note.id} onClick={clickHandler}>{note.title}</li>
+          })}
         </ul>
       </div>
     )
   } else {
     return (
-      <div>
+      <div id='app-container'>
         <ul>
         </ul>
       </div>

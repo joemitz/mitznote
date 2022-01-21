@@ -17,7 +17,9 @@ router.post('/login', (req, res) => {
 
 router.post('/notes', (req, res) => {
   db.notes.create(req.body.username, req.body.title, req.body.text)
-    .then(result => res.send('success'))
+    .then(result => {
+      res.send(result.id)
+    })
     .catch(err => { console.log(err); res.send(err) });
 });
 

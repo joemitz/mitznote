@@ -4,9 +4,11 @@ import * as request from '../requests.js';
 import * as cookies from '../cookies.js';
 import SignUp from './SignUp.jsx';
 import Login from './Login.jsx';
-import Editor from './Editor.jsx';
+import Nav from './Nav.jsx';
+import Create from './Create.jsx';
 import List from './List.jsx';
-import Viewer from './Viewer.jsx';
+import Editor from './Editor.jsx';
+import css from '../styles.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class App extends React.Component {
       text: ''
     };
     this.getNotes = this.getNotes.bind(this);
+    this.selectNote = this.selectNote.bind(this);
   }
 
   componentDidMount() {
@@ -56,9 +59,11 @@ class App extends React.Component {
   }
 
   onCreate(title, text) {
-    request.create(this.state.username, title, text, err => {
-      err ? console.log(err) : this.getNotes(this.state.username);
-    })
+    request.create(this.state.username, title, text)
+      .then(res => {
+        this.getNotes(this.state.username, res.data);
+      })
+      .catch(err => console.log(err));
   }
 
   onDelete(noteID) {
@@ -68,11 +73,12 @@ class App extends React.Component {
       .catch((err) => console.log(err));
   }
 
-  getNotes(username) {
+  getNotes(username, newNoteID = '') {
     request.read(username)
       .then(notes => {
         notes = notes.data.reverse();
         this.setState({ notes })
+        this.selectNote(newNoteID);
       })
       .catch(err => console.log(err));
   }
@@ -96,21 +102,23 @@ class App extends React.Component {
   render() {
     if (this.state.loggedIn) {
       return (
-        <div>
-          <p>Welcome, {this.state.username}!</p>
-          <button onClick={this.onLogout.bind(this)}>Logout</button>
-          <List notes={this.state.notes}
-                selectNote={this.selectNote.bind(this)
-          }/>
-          <Viewer notes={this.state.notes}
-                  noteID={this.state.noteID}
-                  onDelete={this.onDelete.bind(this)}
-                  title={this.state.title}
-                  text={this.state.text}
-                  onUpdate={this.onUpdate.bind(this)}
-          />
-          <Editor onCreate={this.onCreate.bind(this)}/>
-          <br></br>
+        <div id='app-container'>
+          <Nav onLogout={this.onLogout.bind(this)} username={this.state.username}/>
+          <div id='columns-container'>
+            <div id='left-container'>
+              <Create onCreate={this.onCreate.bind(this)}/>
+              <List notes={this.state.notes}
+                    selectNote={this.selectNote.bind(this)}/>
+            </div>
+            <div id='right-container'>
+              <Editor notes={this.state.notes}
+                      noteID={this.state.noteID}
+                      onDelete={this.onDelete.bind(this)}
+                      title={this.state.title}
+                      text={this.state.text}
+                      onUpdate={this.onUpdate.bind(this)}/>
+            </div>
+          </div>
         </div>
       );
 

@@ -1,0 +1,63 @@
+html, body {
+  background-color: rgb(44, 57, 102);
+  display: flex;
+  justify-content: center;
+}
+
+input, textarea, button {
+  background-color: rgb(44, 57, 102);
+}
+
+textarea {
+  width: 500px;
+  height: 500px;
+}
+
+ul, li {
+  list-style-type: none;
+  margin: 0;
+  padding-top: 0;
+}
+
+#title {
+  height: 25px;
+  font-size: 22px;
+  text-align: center;
+}
+
+#app-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#nav-container {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 10px;
+}
+
+#columns-container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+}
+
+#left-container {
+  padding-top: 26px;
+}
+
+#create-container {
+
+}
+
+#list-container {
+
+}
+
+#right-container {
+
+}
+
+#editor-container {
+
+}

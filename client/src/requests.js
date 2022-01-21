@@ -25,9 +25,7 @@ const login = (username, password, callback) => {
 };
 
 const create = (username, title, text, callback) => {
-  axios.post(`${path}/notes`, { username, title, text })
-    .then(res => { callback() })
-    .catch(err => { console.log(err); callback('Something went wrong.') });
+  return axios.post(`${path}/notes`, { username, title, text })
 }
 
 const read = (username) => {

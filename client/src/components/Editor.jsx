@@ -3,23 +3,22 @@ import { hot } from 'react-hot-loader';
 
 const Editor = (props) => {
 
-  const clickHandler = (event) => {
+  const deleteHandler = (event) => {
     event.preventDefault();
-    let title = event.currentTarget.form[0].value;
-    let text = event.currentTarget.form[1].value;
-    props.onCreate(title, text);
+    props.onDelete(props.noteID);
+  }
+
+  const changeHandler = (event) => {
+    props.onUpdate(event.target.value);
   }
 
   return (
-    <div>
+    <div id='editor-container'>
+      <div id='title'>{props.title}</div>
       <form>
-        <input id='title' name='title'></input>
-        <br></br><br></br>
-        <textarea id='text' name='text' rows='10'></textarea>
-        <br></br><br></br>
-        <button onClick={clickHandler}>Create</button>
-        <br></br>
+        <textarea value={props.text} onChange={changeHandler}></textarea>
       </form>
+      <button onClick={deleteHandler}>Delete</button>
     </div>
   )
 }
