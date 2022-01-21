@@ -60,9 +60,7 @@ class App extends React.Component {
 
   onCreate(title, text) {
     request.create(this.state.username, title, text)
-      .then(res => {
-        this.getNotes(this.state.username, res.data);
-      })
+      .then(res => { this.getNotes(this.state.username, true) })
       .catch(err => console.log(err));
   }
 
@@ -73,12 +71,13 @@ class App extends React.Component {
       .catch((err) => console.log(err));
   }
 
-  getNotes(username, newNoteID = '') {
+  getNotes(username, newNote = false) {
     request.read(username)
       .then(notes => {
         notes = notes.data.reverse();
-        this.setState({ notes })
-        this.selectNote(newNoteID);
+        this.setState({ notes }, () => {
+          if (newNote) { this.selectNote(this.state.notes[0].id) }
+        })
       })
       .catch(err => console.log(err));
   }
