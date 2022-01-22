@@ -21,7 +21,8 @@ class App extends React.Component {
       notes: [],
       noteID: '',
       title: '',
-      text: ''
+      text: '',
+      newNote: ''
     };
     this.getNotes = this.getNotes.bind(this);
     this.selectNote = this.selectNote.bind(this);
@@ -112,7 +113,7 @@ class App extends React.Component {
           <div id='nav-container'>
             <Create onCreate={this.onCreate.bind(this)}/>
             <Account onLogout={this.onLogout.bind(this)}
-                 username={this.state.username}/>
+                     username={this.state.username}/>
           </div>
 
           <div id='columns-container'>
@@ -136,12 +137,19 @@ class App extends React.Component {
 
     } else if (this.state.signUp) {
       return (
-        <SignUp onSignUp={this.onSignUp.bind(this)} error={this.state.error} />
+        <div id='app-container'>
+          <SignUp onSignUp={this.onSignUp.bind(this)}
+                error={this.state.error} />
+        </div>
       );
 
     } else {
       return (
-        <Login onLogin={this.onLogin.bind(this)} renderSignUp={this.renderSignUp.bind(this)} error={this.state.error} />
+        <div id='app-container'>
+          <Login onLogin={this.onLogin.bind(this)}
+               renderSignUp={this.renderSignUp.bind(this)}
+               error={this.state.error} />
+        </div>
       );
     }
   }

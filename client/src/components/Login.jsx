@@ -11,7 +11,7 @@ const Login = (props) => {
   }
 
   return (
-    <div>
+    <div id='login-container'>
       <h3>Log in:</h3>
       <form>
         <label>Username: </label>

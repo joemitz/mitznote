@@ -50,10 +50,13 @@ span {
   box-sizing: border-box;
 }
 
+#title-container {
+  height: 22px;
+}
+
 #title {
-  height: 25px;
   font-size: 22px;
-  text-align: left;
+  height: 5px;
 }
 
 #app {
@@ -104,10 +107,18 @@ span {
 #right-container {
   flex-grow: 1;
   display: flex;
-  text-align: left;
+  text-align: center;
 }
 
 #editor-container {
   padding-top: 25px;
   flex-grow: 1;
 }
+
+#editor {
+  margin-top: 5px;
+}
+
+/*
+#login-container, #signup-container {}
+*/

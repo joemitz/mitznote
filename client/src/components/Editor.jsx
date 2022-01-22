@@ -14,8 +14,10 @@ const Editor = (props) => {
 
   return (
     <div id='editor-container'>
-      <span>{props.title}</span>
-      <form>
+      <div id='title-container'>
+        <span id='title'>{props.title}</span>
+      </div>
+      <form id='editor'>
         <textarea placeholder='Type your note here...' value={props.text} onChange={changeHandler}></textarea>
       </form>
       <button onClick={deleteHandler}>Delete</button>
