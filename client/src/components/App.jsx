@@ -65,19 +65,25 @@ class App extends React.Component {
   }
 
   onDelete(noteID) {
-    this.setState({ title: '', text: '' })
     request.destroy(this.state.username, noteID)
-      .then(() => this.getNotes(this.state.username))
+      .then(() => {
+        this.setState({ title: '', text: '', noteID: '' }, () => {
+          this.getNotes(this.state.username)
+        });
+      })
       .catch((err) => console.log(err));
   }
 
   getNotes(username, newNote = false) {
     request.read(username)
       .then(notes => {
-        notes = notes.data.reverse();
+        notes = notes.data;
         this.setState({ notes }, () => {
-          if (newNote) { this.selectNote(this.state.notes[0].id) }
-        })
+          if (newNote) { this.selectNote(this.state.notes[this.state.notes.length - 1].id) }
+          if (this.state.notes.length > 0 && this.state.noteID === '') {
+            this.selectNote(this.state.notes[0].id)
+          }
+        });
       })
       .catch(err => console.log(err));
   }
@@ -95,7 +101,7 @@ class App extends React.Component {
     this.setState({ text });
     request.put(this.state.username, this.state.noteID, text)
       .then(() => this.getNotes(this.state.username))
-      .catch((err) => console.log('err'));
+      .catch((err) => console.log(err));
   }
 
   render() {

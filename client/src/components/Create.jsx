@@ -12,7 +12,7 @@ const Create = (props) => {
   return (
     <div id='create-container'>
       <form>
-        <input name='title'></input>
+        <input placeholder='Note title...' name='title'></input>
         <br></br>
         <button onClick={clickHandler}>New Note</button>
       </form>

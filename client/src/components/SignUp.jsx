@@ -20,9 +20,8 @@ const SignUp = (props) => {
         <label>Password: </label>
         <input type='password' name='password' id='password'></input>
         <br></br><br></br>
-        <button onClick={clickHandler}>Submit</button>
+        <button onClick={clickHandler}>Submit</button><span> {props.error}</span>
       </form>
-      <p>{props.error}</p>
     </div>
   );
 }

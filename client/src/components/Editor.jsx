@@ -14,8 +14,9 @@ const Editor = (props) => {
 
   return (
     <div id='editor-container'>
+      <span>{props.title}</span>
       <form>
-        <textarea value={props.text} onChange={changeHandler}></textarea>
+        <textarea placeholder='Type your note here...' value={props.text} onChange={changeHandler}></textarea>
       </form>
       <button onClick={deleteHandler}>Delete</button>
     </div>
